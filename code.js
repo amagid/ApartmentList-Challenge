@@ -1,4 +1,4 @@
-(function () {
+(function (startWord) {
     const dict = ["FIST", "FISTS", "LISTS", "LISTY", "LIT", "LITAI", "LITANIES", "LITANY", "LITAS", "LITCHI", "LITCHIS", "LUSTY"];
     let networkSize = 0;
 
@@ -45,7 +45,33 @@
                 }
             }
         }
-        //If we haven't found a difference by this point, they're within 1 of each other.
+        //If we haven't found two differences by this point, they're within 1 of each other.
         return true;
     }
-})();
+
+    //Count this word and its friends
+    function processWord(word, dictionary) {
+        //Count this word
+        networkSize++;
+
+        //Store current list since we're going to access it a lot.
+        let list;
+        //Check lists where word length is within 1 of this word's length
+        for (let i = -1; i < 2; i++) {
+            list = dictionary[word.length + i];
+            //Iterate through words in this list
+            for (listWord of list) {
+                //If we haven't visited this word, and it's a friend of our word,
+                if (!list[listWord] && editDistanceOf1(word, listWord)) {
+                    //Process it!
+                    processWord(listWord, dictionary);
+                }
+            }
+        }
+        return networkSize;
+    }
+
+    //Start
+    return processWord(startWord);
+
+})("LISTY");
