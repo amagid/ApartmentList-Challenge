@@ -76,6 +76,6 @@
     }
 
     //Start
-    return processWord(startWord);
+    return processWord(startWord, preprocessDictionary(dict));
 
 })("LISTY");
