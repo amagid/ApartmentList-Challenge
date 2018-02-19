@@ -66,6 +66,8 @@
                 for (listWord in list) {
                     //If we haven't visited this word, and it's a friend of our word,
                     if (!list[listWord] && editDistanceOf1(word, listWord)) {
+                        //Set this word as visited
+                        list[listWord] = true;
                         //Process it!
                         processWord(listWord, dictionary);
                     }
