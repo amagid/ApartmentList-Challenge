@@ -68,10 +68,10 @@ let network = (function (startWord) {
             if (list) {
                 //Iterate through words in this list
                 for (listWord in list) {
-                    //If we haven't visited this word, and it's a friend of our word,
-                    if (!list[listWord] && editDistanceOf1(word, listWord)) {
-                        //Set this word as visited
-                        list[listWord] = true;
+                    //If this word is a friend of our word,
+                    if (editDistanceOf1(word, listWord)) {
+                        //Delete the word from the list so that we don't have to visit again
+                        delete list[listWord];
                         //Add it to the queue!
                         queue.push(listWord);
                     }
@@ -87,6 +87,8 @@ let network = (function (startWord) {
         let dictionary = preprocessDictionary(d);
         //Add starting word to queue
         queue.push(word);
+        //Remove starting word from dictionary so that it will never be revisited.
+        delete dictionary[word.length][word];
         //As long as we still have words to process, keep processing
         while (queue.length > 0) {
             processWord(queue.pop(), dictionary);
@@ -95,7 +97,7 @@ let network = (function (startWord) {
     }
 
     //Start
-    console.log(calculateNetworkSize(startWord, dict));
+    return calculateNetworkSize(startWord, dict);
 
 })("LISTY");
 
