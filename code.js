@@ -18,10 +18,10 @@ let network = (function (startWord) {
             //If we don't have an entry for this word length yet,
             if (organized[dictionary[i].length] === undefined) {
                 //create it.
-                organized[dictionary[i].length] = {};
+                organized[dictionary[i].length] = [];
             }
-            //Set value of key to false - will use later to track visited words
-            organized[dictionary[i].length][dictionary[i]] = false;
+            //Add word to list of words of this length
+            organized[dictionary[i].length].push(dictionary[i]);
         }
         return organized;
     }
@@ -67,13 +67,13 @@ let network = (function (startWord) {
             //Skip this if this list doesn't exist (no words of this length)
             if (list) {
                 //Iterate through words in this list
-                for (listWord in list) {
+                for (let j = 0; j < list.length; j++) {
                     //If this word is a friend of our word,
-                    if (editDistanceOf1(word, listWord)) {
-                        //Delete the word from the list so that we don't have to visit again
-                        delete list[listWord];
+                    if (editDistanceOf1(word, list[j])) {
                         //Add it to the queue!
-                        queue.push(listWord);
+                        queue.push(list[j]);
+                        //Delete the word from the list so that we don't have to visit again
+                        list.splice(j, 1);
                     }
                 }
             }
@@ -88,7 +88,7 @@ let network = (function (startWord) {
         //Add starting word to queue
         queue.push(word);
         //Remove starting word from dictionary so that it will never be revisited.
-        delete dictionary[word.length][word];
+        dictionary[word.length].splice(dictionary[word.length].indexOf(word), 1);
         //As long as we still have words to process, keep processing
         while (queue.length > 0) {
             processWord(queue.pop(), dictionary);
