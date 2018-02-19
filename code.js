@@ -63,7 +63,7 @@
             //Skip this if this list doesn't exist (no words of this length)
             if (list) {
                 //Iterate through words in this list
-                for (listWord of list) {
+                for (listWord in list) {
                     //If we haven't visited this word, and it's a friend of our word,
                     if (!list[listWord] && editDistanceOf1(word, listWord)) {
                         //Process it!
