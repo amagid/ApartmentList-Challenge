@@ -21,4 +21,31 @@
         }
         return organized;
     }
+
+    //Check to see if the edit distance is 1 
+    function editDistanceOf1(word1, word2) {
+        //Have we found a difference yet?
+        let different = false;
+
+        //Iterate through all letters in the words, checking equality
+        for (let i = 0, j = 0; i < word1.length; i++, j++) {
+            //If not equal here
+            if (word1.charAt(i) !== word2.charAt(j)) {
+                //If we've already found a difference, exit
+                if (different) {
+                    return false;
+                }
+                //If not, set flag
+                different = true;
+                //Re-check this letter on the shorter word (different because this letter was removed?)
+                if (word1.length < word2.length) {
+                    i--;
+                } else if (word2.length < word1.length) {
+                    j--;
+                }
+            }
+        }
+        //If we haven't found a difference by this point, they're within 1 of each other.
+        return true;
+    }
 })();
