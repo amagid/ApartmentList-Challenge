@@ -53,6 +53,8 @@
     function processWord(word, dictionary) {
         //Count this word
         networkSize++;
+        //Set this word as visited
+        dictionary[word.length][word] = true;
 
         //Store current list since we're going to access it a lot.
         let list;
@@ -66,8 +68,6 @@
                 for (listWord in list) {
                     //If we haven't visited this word, and it's a friend of our word,
                     if (!list[listWord] && editDistanceOf1(word, listWord)) {
-                        //Set this word as visited
-                        list[listWord] = true;
                         //Process it!
                         processWord(listWord, dictionary);
                     }
