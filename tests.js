@@ -17,6 +17,13 @@ describe('PreprocessDictionary', function () {
             ['HALLOW']
         ]);
     });
+
+    it('Should be able to handle an empty dictionary', function() {
+        const input = [];
+        const result = functions.preprocessDictionary(input);
+
+        assert.deepEqual(result, []);
+    });
 });
 
 describe('EditDistanceOf1', function () {
@@ -129,7 +136,30 @@ describe('ProcessNextWord', function () {
 });
 
 describe('CalculateNetworkSize', function () {
-    it('', function () {
-        
+    it('Should properly calculate the network size of the "HI" example set (7)', function () {
+        const word = "HI";
+        const dictionary = ['HI', 'HERE', 'THERE', 'HER', 'HE', 'SHE', 'HEAR', 'HALLOW'];
+
+        const result = functions.calculateNetworkSize(word, dictionary);
+
+        assert.equal(result, 7);
     });
+
+    it('Should properly calculate the network size of a word with no friends', function () {
+        const word = "HALLOW";
+        const dictionary = ['HI', 'HERE', 'THERE', 'HER', 'HE', 'SHE', 'HEAR', 'HALLOW'];
+
+        const result = functions.calculateNetworkSize(word, dictionary);
+
+        assert.equal(result, 1);
+    });
+
+    it('Should complete the assigned task in less than 30 seconds', function() {
+        const word = "LISTY";
+        const startTime = (new Date).getTime();
+
+        const result = functions.calculateNetworkSize(word, fullDictionary);
+        const endTime = (new Date).getTime();
+        assert.isBelow(endTime - startTime, 30000, `Execution took ${endTime - startTime}ms, which is over the 30000ms limit.`);
+    }).timeout(30000);
 });
