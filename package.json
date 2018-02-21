@@ -2,7 +2,7 @@
   "name": "Apartment_List_Coding_Challenge",
   "version": "2.0.0",
   "scripts": {
-    "start": "node code.js",
+    "start": "node challenge.js",
     "test": "mocha tests.js"
   },
   "devDependencies": {
