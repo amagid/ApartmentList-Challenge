@@ -61,6 +61,11 @@ describe('EditDistanceOf1', function () {
         const result = functions.editDistanceOf1("LISTY", "FIST");
         assert.isFalse(result);
     });
+
+    it('Should return false when we have an addition and a removal', function () {
+        const result = functions.editDistanceOf1("LISTY", "LLIST");
+        assert.isFalse(result);
+    });
 });
 
 describe('ProcessNextWord', function () {
