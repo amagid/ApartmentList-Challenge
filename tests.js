@@ -1,10 +1,21 @@
 const assert = require('chai').assert;
 const functions = require('./network').testing;
-const dictionary = require('./dictionaries/dictionary_full.json');
+const fullDictionary = require('./dictionaries/dictionary_full.json');
 
 describe('PreprocessDictionary', function () {
-    it('', function () {
+    it('Should sort the dictionary by word length, preserving alphabetization', function () {
+        const input = ['HI', 'HERE', 'THERE', 'HER', 'HE', 'SHE', 'HEAR', 'HALLOW'];
+        const result = functions.preprocessDictionary(input);
 
+        assert.deepEqual(result, [
+            ,
+            ,
+            ['HI', 'HE'],
+            ['HER', 'SHE'],
+            ['HERE', 'HEAR'],
+            ['THERE'],
+            ['HALLOW']
+        ]);
     });
 });
 
