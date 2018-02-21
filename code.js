@@ -1,7 +1,17 @@
-
+//I use this format so that intended interfaces are clear, but all methods are easily accessible for testing.
+//Module.exports included at top of file so that how to interface with a particular file / class is clear.
 module.exports = {
-    calculateNetworkSize
-}
+    calculateNetworkSize,
+    testing: {
+        preprocessDictionary,
+        editDistanceOf1,
+        processNextWord,
+        calculateNetworkSize
+    }
+};
+
+//Require all necessary modules
+const dict = require('./dictionary.json');
 
 //Organize the dictionary into a better-usable format
 //Basically, we're organizing it by word length, since
@@ -51,9 +61,9 @@ function editDistanceOf1(word1, word2) {
 }
 
 //Count this word and its friends
-function processWord(word, dictionary) {
-    //Count this word
-    networkSize++;
+function processNextWord(queue, dictionary) {
+    //Get the next word
+    const word = queue.pop();
 
     //Store current list since we're going to access it a lot.
     let list;
@@ -75,24 +85,22 @@ function processWord(word, dictionary) {
             }
         }
     }
-    return networkSize;
 }
 
 //Calculate the network size of a starting word
-function calculateNetworkSize(word, d) {
+function calculateNetworkSize(word) {
+    let networkSize = 0;
+    let queue = [];
     //Preprocess dictionary for easy use
-    let dictionary = preprocessDictionary(d);
+    let dictionary = preprocessDictionary(dict);
     //Add starting word to queue
     queue.push(word);
     //Remove starting word from dictionary so that it will never be revisited.
     dictionary[word.length].splice(dictionary[word.length].indexOf(word), 1);
     //As long as we still have words to process, keep processing
     while (queue.length > 0) {
-        processWord(queue.pop(), dictionary);
+        processNextWord(queue, dictionary);
+        networkSize++;
     }
     return networkSize;
 }
-
-const endTime = (new Date).getTime();
-console.log(`Network Size: ${network}`);
-console.log(`Time taken: ${endTime - startTime}`);
