@@ -1,7 +1,7 @@
 //Get functions for network calculation
 const network = require('./network');
 //Get dictionary
-const dictionary = require('./dictionary.json');
+const dictionary = require('./dictionaries/dictionary_full.json');
 
 //Benchmark and output
 const startTime = (new Date).getTime();
