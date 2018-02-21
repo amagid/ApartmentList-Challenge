@@ -57,8 +57,74 @@ describe('EditDistanceOf1', function () {
 });
 
 describe('ProcessNextWord', function () {
-    it('', function () {
-        
+    it('Should add friends to the queue in length then alpabetical order, and remove the processed word', function () {
+        const dictionary = [
+            ,
+            ,
+            ['HI', 'HE'],
+            ['SHE'],
+            ['HERE', 'HEAR'],
+            ['THERE'],
+            ['HALLOW']
+        ];
+        const queue = ["HER"];
+
+        functions.processNextWord(queue, dictionary);
+
+        assert.deepEqual(queue, [
+            'HE', 'HERE', 'HEAR'
+        ]);
+    });
+
+    it('Should remove friends from the dictionary so they won\'t be double-processed', function () {
+        const dictionary = [
+            ,
+            ,
+            ['HI', 'HE'],
+            ['SHE'],
+            ['HERE', 'HEAR'],
+            ['THERE'],
+            ['HALLOW']
+        ];
+        const queue = ["HER"];
+
+        functions.processNextWord(queue, dictionary);
+
+        assert.deepEqual(dictionary, [
+            ,
+            ,
+            ['HI'],
+            ['SHE'],
+            [],
+            ['THERE'],
+            ['HALLOW']
+        ]);
+    });
+
+    it('Should silently skip empty sublists in the dictionary', function () {
+        const dictionary = [
+            ,
+            ,
+            ,
+            ,
+            ,
+            ['THERE'],
+            ['HALLOW']
+        ];
+        const queue = ["HER"];
+
+        functions.processNextWord(queue, dictionary);
+
+        assert.deepEqual(queue, []);
+    });
+
+    it('Should gracefully handle the ends of the dictionary, when no sublists exist', function () {
+        const dictionary = [];
+        const queue = ["HER"];
+
+        functions.processNextWord(queue, dictionary);
+
+        assert.deepEqual(queue, []);
     });
 });
 
