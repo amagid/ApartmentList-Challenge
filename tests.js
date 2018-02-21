@@ -20,8 +20,39 @@ describe('PreprocessDictionary', function () {
 });
 
 describe('EditDistanceOf1', function () {
-    it('', function () {
-        
+    it('Should return true when it\'s the same word', function () {
+        const result = functions.editDistanceOf1("LISTY", "LISTY");
+        assert.isTrue(result);
+    });
+
+    it('Should return true when only one letter has been changed', function () {
+        const result = functions.editDistanceOf1("LISTY", "FISTY");
+        assert.isTrue(result);
+    });
+
+    it('Should return false when two letters have been changed', function () {
+        const result = functions.editDistanceOf1("LISTY", "FISTS");
+        assert.isFalse(result);
+    });
+
+    it('Should return true when only one letter has been removed', function () {
+        const result = functions.editDistanceOf1("PHONE", "PHON");
+        assert.isTrue(result);
+    });
+
+    it('Should return true when only one letter has been added', function () {
+        const result = functions.editDistanceOf1("PHON", "PHLON");
+        assert.isTrue(result);
+    });
+
+    it('Should return false when we have an addition and a change', function () {
+        const result = functions.editDistanceOf1("LIST", "FISTS");
+        assert.isFalse(result);
+    });
+
+    it('Should return false when we have a removal and a change', function () {
+        const result = functions.editDistanceOf1("LISTY", "FIST");
+        assert.isFalse(result);
     });
 });
 
