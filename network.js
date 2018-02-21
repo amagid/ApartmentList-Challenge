@@ -10,9 +10,6 @@ module.exports = {
     }
 };
 
-//Require all necessary modules
-const dict = require('./dictionary.json');
-
 //Organize the dictionary into a better-usable format
 //Basically, we're organizing it by word length, since
 //in order to have an edit distance of 1, two words have
@@ -88,7 +85,7 @@ function processNextWord(queue, dictionary) {
 }
 
 //Calculate the network size of a starting word
-function calculateNetworkSize(word) {
+function calculateNetworkSize(word, dict) {
     let networkSize = 0;
     let queue = [];
     //Preprocess dictionary for easy use
