@@ -159,12 +159,12 @@ describe('CalculateNetworkSize', function () {
         assert.equal(result, 1);
     });
 
-    it('Should complete the assigned task in less than 30 seconds', function() {
+    it('Should complete the assigned task in less than 2 minutes', function() {
         const word = "LISTY";
         const startTime = (new Date).getTime();
 
         const result = functions.calculateNetworkSize(word, fullDictionary);
         const endTime = (new Date).getTime();
-        assert.isBelow(endTime - startTime, 30000, `Execution took ${endTime - startTime}ms, which is over the 30000ms limit.`);
-    }).timeout(30000);
+        assert.isBelow(endTime - startTime, 120000, `Execution took ${endTime - startTime}ms, which is over the 120000ms limit.`);
+    }).timeout(120000);
 });
